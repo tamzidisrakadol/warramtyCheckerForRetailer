@@ -18,4 +18,5 @@ public class LogInActivity extends AppCompatActivity {
         binding= ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
     }
+
 }
