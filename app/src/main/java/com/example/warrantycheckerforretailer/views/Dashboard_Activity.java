@@ -1,5 +1,7 @@
 package com.example.warrantycheckerforretailer.views;
 
+import static com.example.warrantycheckerforretailer.views.LogInActivity.panNumber;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -24,6 +26,11 @@ public class Dashboard_Activity extends AppCompatActivity {
             startActivity(intent);
             return;
         }
+
+       binding.textView.setOnClickListener(v -> {
+           startActivity(new Intent(Dashboard_Activity.this,ProfileActivity.class));
+       });
+
 
 
     }

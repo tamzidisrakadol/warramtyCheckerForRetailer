@@ -24,7 +24,6 @@ public class SharedPrefManager {
     public boolean userLogin(int id, String companyName, String salesMan){
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
         editor.putInt(KEY_USER_ID,id);
         editor.putString(KEY_companyName,companyName);
         editor.putString(KEY_retailerName,salesMan);
@@ -38,6 +37,4 @@ public class SharedPrefManager {
         }
         return false;
     }
-
-
 }

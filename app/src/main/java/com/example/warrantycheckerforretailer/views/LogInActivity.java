@@ -28,6 +28,11 @@ import java.util.Map;
 
 public class LogInActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
+    static String panNumber;
+    public static int retailerInfoID;
+    public static String retailerInfoName;
+    public static String retailerInfoCompanyName;
+    public static String retailerInfoPanNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +49,6 @@ public class LogInActivity extends AppCompatActivity {
             startActivity(intent);
             return;
         }
-
-
 
         binding.loginBtn.setOnClickListener(v -> {
             if (isDataValid()) {
@@ -71,33 +74,32 @@ public class LogInActivity extends AppCompatActivity {
         String companyName = binding.loginCompanyNameET.getText().toString().trim();
         String retailerName = binding.retailerNameEt.getText().toString().trim();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.Url_login, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    Log.d("tag", response);
-                    if (!jsonObject.getBoolean("error")) {
-                        SharedPrefManager.getInstance(getApplicationContext())
-                                .userLogin(jsonObject.getInt("id")
-                                        , jsonObject.getString("companyName")
-                                        , jsonObject.getString("salesMan"));
-                        Toast.makeText(LogInActivity.this, "User login Successful", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LogInActivity.this, Dashboard_Activity.class));
-                        finish();
-                    } else {
-                        Toast.makeText(LogInActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    Log.i("tagconvertstr", "" + e);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.Url_login, response -> {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                if (!jsonObject.getBoolean("error")) {
+                    SharedPrefManager.getInstance(getApplicationContext())
+                            .userLogin(jsonObject.getInt("id")
+                                    , jsonObject.getString("companyName")
+                                    , jsonObject.getString("salesMan"));
+
+                    retailerInfoName = jsonObject.getString("salesMan");
+                    retailerInfoCompanyName=jsonObject.getString("companyName");
+                    retailerInfoID = jsonObject.getInt("id");
+                    retailerInfoPanNumber = jsonObject.getString("panNumber");
+
+                    Toast.makeText(LogInActivity.this, "User login Successful", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LogInActivity.this, Dashboard_Activity.class));
+                    finish();
+                } else {
+                    Toast.makeText(LogInActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 }
+            } catch (JSONException e) {
+                Log.i("exception", e.toString());
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("ETag", "error" + error.toString());
-                Toast.makeText(LogInActivity.this, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
-            }
+        }, error -> {
+            Log.d("ETag", "error" + error.toString());
+            Toast.makeText(LogInActivity.this, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
         }) {
             @Nullable
             @Override
@@ -108,7 +110,6 @@ public class LogInActivity extends AppCompatActivity {
                 return map;
             }
         };
-
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
