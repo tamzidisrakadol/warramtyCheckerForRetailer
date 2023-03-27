@@ -28,11 +28,7 @@ import java.util.Map;
 
 public class LogInActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
-    static String panNumber;
-    public static int retailerInfoID;
-    public static String retailerInfoName;
-    public static String retailerInfoCompanyName;
-    public static String retailerInfoPanNumber;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +54,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
 
+    //checking validity
     private boolean isDataValid() {
         if (binding.loginCompanyNameET.getText().toString().isEmpty()) {
             binding.loginCompanyNameET.requestFocus();
@@ -70,6 +67,7 @@ public class LogInActivity extends AppCompatActivity {
 
     }
 
+    //login to Dashboard
     private void login() {
         String companyName = binding.loginCompanyNameET.getText().toString().trim();
         String retailerName = binding.retailerNameEt.getText().toString().trim();
@@ -81,13 +79,8 @@ public class LogInActivity extends AppCompatActivity {
                     SharedPrefManager.getInstance(getApplicationContext())
                             .userLogin(jsonObject.getInt("id")
                                     , jsonObject.getString("companyName")
-                                    , jsonObject.getString("salesMan"));
-
-                    retailerInfoName = jsonObject.getString("salesMan");
-                    retailerInfoCompanyName=jsonObject.getString("companyName");
-                    retailerInfoID = jsonObject.getInt("id");
-                    retailerInfoPanNumber = jsonObject.getString("panNumber");
-
+                                    , jsonObject.getString("salesMan")
+                                    , jsonObject.getString("panNumber"));
                     Toast.makeText(LogInActivity.this, "User login Successful", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(LogInActivity.this, Dashboard_Activity.class));
                     finish();

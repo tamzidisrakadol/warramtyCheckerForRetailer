@@ -7,9 +7,10 @@ public class SharedPrefManager {
     private static SharedPrefManager mInstance;
     private static Context ctx;
     private static final String SHARED_PREF_NAME= "mySharedPref12";
-    private static final String KEY_companyName = "companyName";
-    private static final String KEY_retailerName = "salesMan";
-    private static final String KEY_USER_ID = "retailerId";
+    public static final String KEY_companyName = "companyName";
+    public static final String KEY_retailerName = "salesMan";
+    public static final String KEY_USER_ID = "retailerId";
+    public static final String KEY_retailer_PanNumber="panNumber";
 
 
     private SharedPrefManager(Context context){
@@ -21,12 +22,13 @@ public class SharedPrefManager {
         }
         return mInstance;
     }
-    public boolean userLogin(int id, String companyName, String salesMan){
+    public boolean userLogin(int id, String companyName, String salesMan,String panNumber){
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(KEY_USER_ID,id);
         editor.putString(KEY_companyName,companyName);
         editor.putString(KEY_retailerName,salesMan);
+        editor.putString(KEY_retailer_PanNumber,panNumber);
         editor.apply();
         return true;
     }
@@ -37,4 +39,6 @@ public class SharedPrefManager {
         }
         return false;
     }
+
+
 }

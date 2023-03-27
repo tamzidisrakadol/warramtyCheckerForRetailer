@@ -1,13 +1,13 @@
 package com.example.warrantycheckerforretailer.views;
 
-import static com.example.warrantycheckerforretailer.views.LogInActivity.panNumber;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.warrantycheckerforretailer.R;
+
 import com.example.warrantycheckerforretailer.databinding.ActivityDashboardBinding;
 import com.example.warrantycheckerforretailer.repository.SharedPrefManager;
 
