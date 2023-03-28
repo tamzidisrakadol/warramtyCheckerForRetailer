@@ -17,6 +17,7 @@ import com.example.warrantycheckerforretailer.databinding.ActivityProfileBinding
 
 public class ProfileActivity extends AppCompatActivity {
     ActivityProfileBinding binding;
+    static int rID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("mySharedPref12", Context.MODE_PRIVATE);
         String cName = sharedPreferences.getString(KEY_companyName,"");
         String rName= sharedPreferences.getString(KEY_retailerName,"");
-        int rID = sharedPreferences.getInt(KEY_USER_ID,0);
+        rID = sharedPreferences.getInt(KEY_USER_ID,0);
         String pNumber=sharedPreferences.getString(KEY_retailer_PanNumber,"");
 
 

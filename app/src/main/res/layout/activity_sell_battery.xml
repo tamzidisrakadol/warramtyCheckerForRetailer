@@ -83,6 +83,7 @@
                     android:id="@+id/sellBatteryCustomerNumberET"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:inputType="number"
                     android:fontFamily="@font/fontstyle" />
             </com.google.android.material.textfield.TextInputLayout>
 

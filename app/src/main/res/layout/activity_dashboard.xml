@@ -21,11 +21,10 @@
         android:id="@+id/view"
         android:layout_width="@dimen/_2sdp"
         android:layout_height="@dimen/_65sdp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="432dp"
+        android:layout_marginStart="20dp"
         android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dashboardSellBtn" />
+        app:layout_constraintStart_toEndOf="@+id/dashboardSellBtn"
+        app:layout_constraintTop_toTopOf="@+id/dashboardSellBtn" />
 
     <ImageButton
         android:id="@+id/dashboardProfileBtn"
@@ -38,32 +37,13 @@
         app:layout_constraintStart_toEndOf="@+id/view"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <View
         android:layout_width="@dimen/_2sdp"
         android:layout_height="@dimen/_65sdp"
         android:layout_marginStart="20dp"
-        android:layout_marginBottom="432dp"
         android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dashboardProfileBtn" />
-
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="@dimen/_65sdp"
-        android:layout_height="@dimen/_2sdp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dashboardSellBtn" />
-
-    <View
-        android:layout_width="@dimen/_65sdp"
-        android:layout_height="@dimen/_2sdp"
-        android:layout_marginBottom="424dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="163dp" />
+        app:layout_constraintStart_toEndOf="@+id/dashboardProfileBtn"
+        app:layout_constraintTop_toTopOf="@+id/dashboardProfileBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
