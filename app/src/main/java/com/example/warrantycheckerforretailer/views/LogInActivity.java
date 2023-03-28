@@ -39,9 +39,9 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         getSupportActionBar().hide();
 
-        if (SharedPrefManager.getInstance(this).isLoggedIn()){
+        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
-            Intent intent = new Intent(this,Dashboard_Activity.class);
+            Intent intent = new Intent(this, Dashboard_Activity.class);
             startActivity(intent);
             return;
         }

@@ -6,15 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".views.Dashboard_Activity">
 
-    <TextView
-        android:id="@+id/textView"
+    <ImageButton
+        android:id="@+id/dashboardSellBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="372dp"
-        android:text="Dashboard"
-        android:textSize="@dimen/_30sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="336dp"
+        android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/selling" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="@dimen/_2sdp"
+        android:layout_height="@dimen/_65sdp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="432dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dashboardSellBtn" />
+
+    <ImageButton
+        android:id="@+id/dashboardProfileBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="336dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/user"
+        app:layout_constraintStart_toEndOf="@+id/view"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="@dimen/_2sdp"
+        android:layout_height="@dimen/_65sdp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="432dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dashboardProfileBtn" />
+
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="@dimen/_65sdp"
+        android:layout_height="@dimen/_2sdp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dashboardSellBtn" />
+
+    <View
+        android:layout_width="@dimen/_65sdp"
+        android:layout_height="@dimen/_2sdp"
+        android:layout_marginBottom="424dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="163dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

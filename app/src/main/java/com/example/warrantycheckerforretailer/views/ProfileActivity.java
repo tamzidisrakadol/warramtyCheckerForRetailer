@@ -13,7 +13,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.warrantycheckerforretailer.databinding.ActivityProfileBinding;
-import com.example.warrantycheckerforretailer.repository.SharedPrefManager;
+
 
 public class ProfileActivity extends AppCompatActivity {
     ActivityProfileBinding binding;

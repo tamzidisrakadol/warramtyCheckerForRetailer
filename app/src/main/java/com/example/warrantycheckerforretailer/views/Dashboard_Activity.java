@@ -27,11 +27,13 @@ public class Dashboard_Activity extends AppCompatActivity {
             return;
         }
 
-       binding.textView.setOnClickListener(v -> {
-           startActivity(new Intent(Dashboard_Activity.this,ProfileActivity.class));
-       });
+        binding.dashboardProfileBtn.setOnClickListener(v -> {
+            startActivity(new Intent(Dashboard_Activity.this,ProfileActivity.class));
+        });
 
-
+        binding.dashboardSellBtn.setOnClickListener(v -> {
+            startActivity(new Intent(Dashboard_Activity.this, SellBatteryActivity.class));
+        });
 
     }
 }
