@@ -54,7 +54,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
 
-    //checking validity
+    //checking data validity
     private boolean isDataValid() {
         if (binding.loginCompanyNameET.getText().toString().isEmpty()) {
             binding.loginCompanyNameET.requestFocus();

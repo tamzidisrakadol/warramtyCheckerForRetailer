@@ -1,7 +1,5 @@
 package com.example.warrantycheckerforretailer.views;
 
-import static com.example.warrantycheckerforretailer.views.ProfileActivity.rID;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.warrantycheckerforretailer.databinding.ActivitySellBatteryBinding;
 import com.example.warrantycheckerforretailer.repository.CaptureAct;
+import com.example.warrantycheckerforretailer.repository.SharedPrefManager;
 import com.example.warrantycheckerforretailer.utlity.Constraints;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
@@ -35,10 +34,11 @@ import java.util.Map;
 
 public class SellBatteryActivity extends AppCompatActivity {
     ActivitySellBatteryBinding binding;
-    Boolean isDateSelected = false;
-    Boolean isBarcodeScanned = false;
-    String selectedDate;
-    String barcodeValue;
+    private Boolean isDateSelected = false;
+    private Boolean isBarcodeScanned = false;
+    private int retailerID = SharedPrefManager.getInstance(this).getRetailerID();
+    private String selectedDate;
+    private String barcodeValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +75,7 @@ public class SellBatteryActivity extends AppCompatActivity {
     }
 
 
+    //choose date
     private void pickUpDate(View view){
         Calendar myCalendar = Calendar.getInstance();
         int year = myCalendar.get(Calendar.YEAR);
@@ -92,6 +93,7 @@ public class SellBatteryActivity extends AppCompatActivity {
         dpd.show();
     }
 
+    //scan barcode of battery
     private void scanBarcode() {
         ScanOptions scanOptions = new ScanOptions();
         scanOptions.setPrompt("Volume up to flash on");
@@ -113,29 +115,22 @@ public class SellBatteryActivity extends AppCompatActivity {
         String customerName = binding.sellBatteryCustomerNameET.getText().toString();
         String customerNumber = binding.sellBatteryCustomerNumberET.getText().toString();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.add_customer, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    if (!jsonObject.getBoolean("error")){
-                        Toast.makeText(SellBatteryActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                        finish();
-                    }else{
-                        Toast.makeText(SellBatteryActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.add_customer, response -> {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                if (!jsonObject.getBoolean("error")){
+                    Toast.makeText(SellBatteryActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    finish();
+                }else{
+                    Toast.makeText(SellBatteryActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    return;
                 }
+
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("eTag",error.getMessage());
-            }
-        }){
+        }, error ->
+                Log.d("eTag",error.getMessage())){
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
@@ -143,7 +138,7 @@ public class SellBatteryActivity extends AppCompatActivity {
                 map.put("customerName",customerName);
                 map.put("customerNumber",customerNumber);
                 map.put("batteryBarcode",barcodeValue);
-                map.put("retailerID",String.valueOf(rID));
+                map.put("retailerID",String.valueOf(retailerID));
                 map.put("purchaseDate",selectedDate);
                 return map;
             }

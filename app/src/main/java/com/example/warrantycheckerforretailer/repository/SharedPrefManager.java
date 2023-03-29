@@ -40,5 +40,27 @@ public class SharedPrefManager {
         return false;
     }
 
+    public String getCompanyName(){
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_companyName,"");
+    }
+
+
+    public String getRetailerName(){
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_retailerName,"");
+    }
+
+    public int getRetailerID(){
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(KEY_USER_ID,0);
+    }
+
+    public String getRetailerPanNumber(){
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_retailer_PanNumber,"");
+    }
+
+
 
 }

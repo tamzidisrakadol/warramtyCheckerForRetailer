@@ -34,6 +34,9 @@ public class Dashboard_Activity extends AppCompatActivity {
         binding.dashboardSellBtn.setOnClickListener(v -> {
             startActivity(new Intent(Dashboard_Activity.this, SellBatteryActivity.class));
         });
+        binding.customerListBtn.setOnClickListener(v -> {
+            startActivity(new Intent(Dashboard_Activity.this,CustomerListActivity.class));
+        });
 
     }
 }

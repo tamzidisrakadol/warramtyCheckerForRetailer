@@ -39,11 +39,24 @@
 
 
     <View
+        android:id="@+id/view2"
         android:layout_width="@dimen/_2sdp"
         android:layout_height="@dimen/_65sdp"
         android:layout_marginStart="20dp"
         android:background="@color/black"
         app:layout_constraintStart_toEndOf="@+id/dashboardProfileBtn"
         app:layout_constraintTop_toTopOf="@+id/dashboardProfileBtn" />
+
+    <ImageButton
+        android:id="@+id/customerListBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="336dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.376"
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
