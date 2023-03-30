@@ -45,6 +45,7 @@ public class SellBatteryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySellBatteryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        getSupportActionBar().hide();
 
         binding.sellBatteryBtn.setOnClickListener(v -> {
             if (isDataValid() && isDateSelected && isBarcodeScanned){

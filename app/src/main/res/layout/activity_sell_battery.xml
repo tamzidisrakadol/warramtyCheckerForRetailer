@@ -7,15 +7,25 @@
     tools:context=".views.SellBatteryActivity">
 
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/undrawsell" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="@dimen/_250sdp"
-        android:layout_height="@dimen/_350sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="@dimen/_370sdp"
         android:elevation="@dimen/_15sdp"
         app:cardCornerRadius="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/imageView3">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -27,18 +37,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/scanner"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
             <TextView
                 android:id="@+id/barcodeTV"
                 android:layout_width="@dimen/_170sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:layout_marginTop="56dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginEnd="15dp"
                 android:background="@drawable/tv_bg"
                 android:fontFamily="@font/fontstyle"
                 android:gravity="center"
@@ -83,8 +93,8 @@
                     android:id="@+id/sellBatteryCustomerNumberET"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="number"
-                    android:fontFamily="@font/fontstyle" />
+                    android:fontFamily="@font/fontstyle"
+                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -93,12 +103,12 @@
                 android:layout_width="@dimen/_220sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginTop="20dp"
-                android:padding="@dimen/_2sdp"
                 android:background="@drawable/tv_bg"
                 android:drawableRight="@drawable/calendar"
-                android:hint="selling date"
                 android:gravity="center"
-                android:textSize="@dimen/_16sdp"
+                android:hint="selling date"
+                android:padding="@dimen/_2sdp"
+                android:textSize="@dimen/_15sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.487"
                 app:layout_constraintStart_toStartOf="parent"
@@ -109,15 +119,40 @@
                 android:layout_width="@dimen/_180sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginTop="24dp"
+                android:fontFamily="@font/fontstyle"
                 android:text="Sell battery"
                 android:textSize="@dimen/_15sdp"
-                android:fontFamily="@font/fontstyle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sellingDateTV" />
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/alike"
+                android:text="Customer Billing"
+                android:textSize="@dimen/_18sdp"
+                android:textStyle="italic"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:scaleType="fitEnd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/sellwave" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
