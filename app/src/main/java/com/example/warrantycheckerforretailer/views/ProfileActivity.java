@@ -1,8 +1,4 @@
 package com.example.warrantycheckerforretailer.views;
-
-
-
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -23,7 +19,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         binding.profileComanyNameTV.setText(SharedPrefManager.getInstance(this).getCompanyName());
         binding.profileRetailerNameTV.setText(SharedPrefManager.getInstance(this).getRetailerName());
-        binding.profileRetailerID.setText(SharedPrefManager.getInstance(this).getRetailerID());
+        binding.profileRetailerID.setText(String.valueOf(SharedPrefManager.getInstance(this).getRetailerID()));
         binding.profileRetailerPanNumber.setText(SharedPrefManager.getInstance(this).getRetailerPanNumber());
 
     }

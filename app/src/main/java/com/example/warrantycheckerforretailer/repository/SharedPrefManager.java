@@ -11,6 +11,7 @@ public class SharedPrefManager {
     public static final String KEY_retailerName = "salesMan";
     public static final String KEY_USER_ID = "retailerId";
     public static final String KEY_retailer_PanNumber="panNumber";
+    public static final String customer_list="customerList";
 
 
     private SharedPrefManager(Context context){
@@ -60,7 +61,4 @@ public class SharedPrefManager {
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_retailer_PanNumber,"");
     }
-
-
-
 }

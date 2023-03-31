@@ -6,57 +6,246 @@
     android:layout_height="match_parent"
     tools:context=".views.Dashboard_Activity">
 
-    <ImageButton
-        android:id="@+id/dashboardSellBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="336dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/selling" />
-
     <View
-        android:id="@+id/view"
-        android:layout_width="@dimen/_2sdp"
-        android:layout_height="@dimen/_65sdp"
-        android:layout_marginStart="20dp"
-        android:background="@color/black"
-        app:layout_constraintStart_toEndOf="@+id/dashboardSellBtn"
-        app:layout_constraintTop_toTopOf="@+id/dashboardSellBtn" />
-
-    <ImageButton
-        android:id="@+id/dashboardProfileBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="336dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/user"
-        app:layout_constraintStart_toEndOf="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp"
+        android:background="#0099ff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="@dimen/_2sdp"
-        android:layout_height="@dimen/_65sdp"
-        android:layout_marginStart="20dp"
-        android:background="@color/black"
-        app:layout_constraintStart_toEndOf="@+id/dashboardProfileBtn"
-        app:layout_constraintTop_toTopOf="@+id/dashboardProfileBtn" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="@dimen/_230sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginTop="148dp"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_15sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageButton
-        android:id="@+id/customerListBtn"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/alike"
+                android:gravity="center"
+                android:text="Total Battery \n Sold"
+                android:textColor="#878383"
+                android:textSize="@dimen/_18sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/dashboardTotalBatteryTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:fontFamily="@font/fontstyle"
+                android:text="15pcs"
+                android:textColor="#878383"
+                android:textSize="@dimen/_18sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.49"
+                app:layout_constraintStart_toEndOf="@+id/textView5"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/dashboardCustomerBilling"
+        android:layout_width="@dimen/_280sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_marginTop="60dp"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_10sdp"
+        android:backgroundTint="#FF6700"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/selling"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:layout_marginEnd="68dp"
+                android:text="Customer Billing info"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_17sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/baseline_arrow_forward_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/dashboardCustomerList"
+        android:layout_width="@dimen/_280sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_marginTop="32dp"
+        app:cardElevation="@dimen/_10sdp"
+        app:cardCornerRadius="@dimen/_10sdp"
+        android:backgroundTint="#7D0552"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dashboardCustomerBilling">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/list"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:fontFamily="@font/alike"
+                android:text="Show Customer List"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_17sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.252"
+                app:layout_constraintStart_toEndOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/baseline_arrow_forward_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/dashboardRetailerProfile"
+        android:layout_width="@dimen/_280sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_marginTop="32dp"
+        app:cardCornerRadius="@dimen/_10sdp"
+        android:backgroundTint="#227442"
+        app:cardElevation="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dashboardCustomerList">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/user"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="36dp"
+                android:text="Retailer Profile"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_17sdp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView7"
+                app:layout_constraintHorizontal_bias="0.065"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/baseline_arrow_forward_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="336dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.376"
-        app:layout_constraintStart_toEndOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/list" />
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="28dp"
+        android:text="Welcome,"
+        android:textColor="@color/white"
+        android:fontFamily="@font/alike"
+        android:textSize="@dimen/_25sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dashboardRetailerNameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Retailer name"
+        android:maxLines="1"
+        android:fontFamily="@font/alike"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_25sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
