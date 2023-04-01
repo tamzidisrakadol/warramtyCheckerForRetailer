@@ -43,6 +43,7 @@ public class CustomerListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding=ActivityCustomerListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        getSupportActionBar().hide();
         showCustomerList();
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
