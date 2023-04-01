@@ -1,7 +1,6 @@
 package com.example.warrantycheckerforretailer.views;
 
 
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,7 +14,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.warrantycheckerforretailer.adapter.CustomerListAdapter;
 import com.example.warrantycheckerforretailer.databinding.ActivityDashboardBinding;
 import com.example.warrantycheckerforretailer.models.CustomerModel;
 import com.example.warrantycheckerforretailer.repository.SharedPrefManager;
@@ -34,6 +32,7 @@ public class Dashboard_Activity extends AppCompatActivity {
     ActivityDashboardBinding binding;
     private int retailerID = SharedPrefManager.getInstance(this).getRetailerID();
     List<CustomerModel> list = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +47,8 @@ public class Dashboard_Activity extends AppCompatActivity {
             return;
         }
 
+
+
         binding.dashboardRetailerProfile.setOnClickListener(v -> {
             startActivity(new Intent(Dashboard_Activity.this,ProfileActivity.class));
         });
@@ -60,7 +61,11 @@ public class Dashboard_Activity extends AppCompatActivity {
         });
 
         binding.dashboardRetailerNameTv.setText(SharedPrefManager.getInstance(this).getRetailerName());
+
+
         getCustomerList();
+
+
     }
 
     private void getCustomerList(){

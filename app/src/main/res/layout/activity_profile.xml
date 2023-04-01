@@ -11,9 +11,9 @@
         android:id="@+id/imageView8"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_180sdp"
+        android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:scaleType="center"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/profilewave" />
 
@@ -54,8 +54,8 @@
         android:id="@+id/profileRetailerNameTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="RetailerName"
         android:fontFamily="@font/alike"
+        android:text="RetailerName"
         android:textSize="@dimen/_22sdp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,20 +72,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileRetailerNameTV" />
 
+
     <TextView
         android:id="@+id/profileComanyNameTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="44dp"
         android:fontFamily="@font/alike"
         android:text="retailerCompanyName"
         android:textColor="@color/black"
         android:textSize="@dimen/_15sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toEndOf="@+id/imageView13"
         app:layout_constraintTop_toBottomOf="@+id/profileRetailerNameTV" />
-
 
     <ImageView
         android:id="@+id/imageView14"
@@ -101,13 +100,12 @@
         android:id="@+id/profileRetailerPanNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="28dp"
-        android:text="retailerPanNumber"
         android:fontFamily="@font/alike"
+        android:text="retailerPanNumber"
         android:textColor="@color/black"
         android:textSize="@dimen/_15sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toEndOf="@+id/imageView14"
         app:layout_constraintTop_toBottomOf="@+id/profileComanyNameTV" />
 
@@ -125,26 +123,16 @@
         android:id="@+id/profileRetailerID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/alike"
         android:text="0"
         android:textColor="@color/black"
         android:textSize="@dimen/_15sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toEndOf="@+id/imageView15"
         app:layout_constraintTop_toBottomOf="@+id/profileRetailerPanNumber" />
 
-    <Button
-        android:id="@+id/profileSignOutBtn"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_45sdp"
-        android:layout_marginBottom="212dp"
-        android:text="Sign out"
-        android:drawableRight="@drawable/arrow_out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
