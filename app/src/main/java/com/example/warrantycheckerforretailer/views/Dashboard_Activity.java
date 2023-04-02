@@ -46,8 +46,7 @@ public class Dashboard_Activity extends AppCompatActivity {
             startActivity(intent);
             return;
         }
-
-
+        getCustomerList();
 
         binding.dashboardRetailerProfile.setOnClickListener(v -> {
             startActivity(new Intent(Dashboard_Activity.this,ProfileActivity.class));
@@ -62,16 +61,19 @@ public class Dashboard_Activity extends AppCompatActivity {
 
         binding.dashboardRetailerNameTv.setText(SharedPrefManager.getInstance(this).getRetailerName());
 
+    }
 
+    @Override
+    protected void onResume() {
         getCustomerList();
-
-
+        super.onResume();
     }
 
     private void getCustomerList(){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.get_Customer_List, response -> {
             try {
                 JSONArray jsonArray = new JSONArray(response);
+                list.clear();
                 for (int i=0;i<jsonArray.length();i++){
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     CustomerModel customerModel = new CustomerModel();
