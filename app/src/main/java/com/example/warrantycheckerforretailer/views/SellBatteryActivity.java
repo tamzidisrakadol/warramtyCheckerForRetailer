@@ -14,8 +14,6 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.warrantycheckerforretailer.databinding.ActivitySellBatteryBinding;
@@ -37,7 +35,7 @@ public class SellBatteryActivity extends AppCompatActivity {
     private Boolean isDateSelected = false;
     private Boolean isBarcodeScanned = false;
     private int retailerID = SharedPrefManager.getInstance(this).getRetailerID();
-    private String selectedDate;
+    private String selectedDate,expireDate;
     private String barcodeValue;
 
     @Override
@@ -86,12 +84,18 @@ public class SellBatteryActivity extends AppCompatActivity {
         DatePickerDialog dpd = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                selectedDate = String.valueOf(year+"/"+(month+1)+"/"+dayOfMonth);
+                int exactMonth = month+1;
+                selectedDate = String.valueOf(year+"-"+exactMonth+"-"+dayOfMonth);
                 binding.sellingDateTV.setText(selectedDate);
                 isDateSelected = true;
+                batteryExpireDate(year,exactMonth,dayOfMonth);
             }
         }, year, month, day);
         dpd.show();
+    }
+
+    private void batteryExpireDate(int year, int month, int dayOfMonth){
+        expireDate = String.valueOf(year+"-"+(month+3)+"-"+dayOfMonth);
     }
 
     //scan barcode of battery
@@ -141,6 +145,7 @@ public class SellBatteryActivity extends AppCompatActivity {
                 map.put("batteryBarcode",barcodeValue);
                 map.put("retailerID",String.valueOf(retailerID));
                 map.put("purchaseDate",selectedDate);
+                map.put("ExpireDate",expireDate);
                 return map;
             }
         };

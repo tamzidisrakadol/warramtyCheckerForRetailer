@@ -2,14 +2,15 @@ package com.example.warrantycheckerforretailer.models;
 
 public class CustomerModel {
     int cID;
-    String customerName,batteryBarcode,sellingDate;
+    String customerName,batteryBarcode,sellingDate,expireDate;
     Long customerNumber;
 
-    public CustomerModel(int cID, String customerName, String batteryBarcode, String sellingDate, Long customerNumber) {
+    public CustomerModel(int cID, String customerName, String batteryBarcode, String sellingDate, String expireDate, Long customerNumber) {
         this.cID = cID;
         this.customerName = customerName;
         this.batteryBarcode = batteryBarcode;
         this.sellingDate = sellingDate;
+        this.expireDate = expireDate;
         this.customerNumber = customerNumber;
     }
 
@@ -46,6 +47,14 @@ public class CustomerModel {
 
     public void setSellingDate(String sellingDate) {
         this.sellingDate = sellingDate;
+    }
+
+    public String getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(String expireDate) {
+        this.expireDate = expireDate;
     }
 
     public Long getCustomerNumber() {

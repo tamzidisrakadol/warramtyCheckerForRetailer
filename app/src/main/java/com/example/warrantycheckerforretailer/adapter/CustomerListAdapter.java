@@ -10,6 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.warrantycheckerforretailer.databinding.CustomerListItemBinding;
 import com.example.warrantycheckerforretailer.models.CustomerModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapter.ViewHolder>{
@@ -29,6 +33,28 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CustomerModel customerModel = customerModelList.get(position);
+        Date currentDate = Calendar.getInstance().getTime();
+        String expireDate = customerModel.getExpireDate();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String formatCurrentDate = sdf.format(currentDate);
+
+        try {
+            Date firstDate = sdf.parse(formatCurrentDate);
+            Date secondDate = sdf.parse(expireDate);
+            Long difference = Math.abs(firstDate.getTime()-secondDate.getTime()) ;
+            Long differenceToDay = difference/(24*60*60*1000);
+            if (differenceToDay >= 0){
+                holder.customerListItemBinding.expireDate.setText(differenceToDay+" days left");
+            }else{
+                holder.customerListItemBinding.expireDate.setText("0");
+            }
+
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+
         holder.customerListItemBinding.listCustomerName.setText(customerModel.getCustomerName());
         holder.customerListItemBinding.listCustomerNumber.setText(customerModel.getCustomerNumber().toString());
         holder.customerListItemBinding.listCustomerBatteryBarcode.setText(customerModel.getBatteryBarcode());

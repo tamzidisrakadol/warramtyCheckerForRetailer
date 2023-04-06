@@ -60,6 +60,7 @@ public class CustomerListActivity extends AppCompatActivity {
                     customerModel.setCustomerNumber(Long.parseLong(jsonObject.getString("customerNumber")));
                     customerModel.setBatteryBarcode(jsonObject.getString("batteryBarcode"));
                     customerModel.setSellingDate(jsonObject.getString("purchaseDate"));
+                    customerModel.setExpireDate(jsonObject.getString("ExpireDate"));
                     customerModelList.add(customerModel);
                     customerListAdapter = new CustomerListAdapter(customerModelList);
                 }
