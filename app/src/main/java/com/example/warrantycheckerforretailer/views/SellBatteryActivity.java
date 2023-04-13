@@ -4,11 +4,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -18,24 +15,22 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.warrantycheckerforretailer.databinding.ActivitySellBatteryBinding;
 import com.example.warrantycheckerforretailer.repository.CaptureAct;
-import com.example.warrantycheckerforretailer.repository.SharedPrefManager;
 import com.example.warrantycheckerforretailer.utlity.Constraints;
+import com.example.warrantycheckerforretailer.utlity.KEYS;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import io.paperdb.Paper;
 
 public class SellBatteryActivity extends AppCompatActivity {
     ActivitySellBatteryBinding binding;
     private Boolean isDateSelected = false;
     private Boolean isBarcodeScanned = false;
-    private int retailerID = SharedPrefManager.getInstance(this).getRetailerID();
-    private String selectedDate,expireDate;
+    private String selectedDate, expireDate;
     private String barcodeValue;
 
     @Override
@@ -43,16 +38,17 @@ public class SellBatteryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySellBatteryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        getSupportActionBar().hide();
-
+        getSupportActionBar().setTitle("Sell Battery");
+        Paper.init(getApplicationContext());
         binding.sellBatteryBtn.setOnClickListener(v -> {
-            if (isDataValid() && isDateSelected && isBarcodeScanned){
-                register();
-            }
-        });
+            if (barcodeValue==null){
+                Toast.makeText(this, "Please scan battery", Toast.LENGTH_SHORT).show();
+               return;
+           }
 
-        binding.sellingDateTV.setOnClickListener(v -> {
-            pickUpDate(v);
+            register();
+
+
         });
 
         binding.scanBtn.setOnClickListener(v -> {
@@ -61,41 +57,30 @@ public class SellBatteryActivity extends AppCompatActivity {
 
     }
 
-    //checking data validity
-    private boolean isDataValid(){
-        if (binding.sellBatteryCustomerNameET.getText().toString().isEmpty()){
-            binding.sellBatteryCustomerNameET.requestFocus();
-            return false;
-        } else if (binding.sellBatteryCustomerNumberET.getText().toString().isEmpty()) {
-            binding.sellBatteryCustomerNumberET.requestFocus();
-            return false;
-        }
-        return true;
-    }
-
-
-    //choose date
-    private void pickUpDate(View view){
-        Calendar myCalendar = Calendar.getInstance();
-        int year = myCalendar.get(Calendar.YEAR);
-        int month = myCalendar.get(Calendar.MONTH);
-        int day = myCalendar.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog dpd = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                int exactMonth = month+1;
-                selectedDate = String.valueOf(year+"-"+exactMonth+"-"+dayOfMonth);
-                binding.sellingDateTV.setText(selectedDate);
-                isDateSelected = true;
-                batteryExpireDate(year,exactMonth,dayOfMonth);
+    private void checkBattery() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.CHECK_BATTERY, response -> {
+            if (response.equals("found")){
+            }else{
+                binding.sellBatteryBtn.setEnabled(false);
+                Toast.makeText(this, "Pleas scan valid battery", Toast.LENGTH_SHORT).show();
             }
-        }, year, month, day);
-        dpd.show();
+        }, error ->
+                Log.d("eTag", error.getMessage())) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("code", barcodeValue);
+                map.put("id", Paper.book().read(KEYS.ID));
+                return map;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
-    private void batteryExpireDate(int year, int month, int dayOfMonth){
-        expireDate = String.valueOf(year+"-"+(month+3)+"-"+dayOfMonth);
+    private void batteryExpireDate(int year, int month, int dayOfMonth) {
+        expireDate = String.valueOf(year + "-" + (month + 3) + "-" + dayOfMonth);
     }
 
     //scan barcode of battery
@@ -107,45 +92,34 @@ public class SellBatteryActivity extends AppCompatActivity {
         scanOptions.setCaptureActivity(CaptureAct.class);
         barLauncher.launch(scanOptions);
     }
+
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
         if (result.getContents() != null) {
             binding.barcodeTV.setText(result.getContents());
             barcodeValue = result.getContents();
+            checkBattery();
             isBarcodeScanned = true;
         }
     });
 
 
-    private void register(){
-        String customerName = binding.sellBatteryCustomerNameET.getText().toString();
-        String customerNumber = binding.sellBatteryCustomerNumberET.getText().toString();
+    private void register() {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.add_customer, response -> {
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                if (!jsonObject.getBoolean("error")){
-                    Toast.makeText(SellBatteryActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                    finish();
-                }else{
-                    Toast.makeText(SellBatteryActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.SELL_BATTERY, response -> {
+          if (response.equals("success")){
+              Toast.makeText(this, "Successfully added !", Toast.LENGTH_SHORT).show();
+              finish();
+          }else{
+              Toast.makeText(this, ""+response, Toast.LENGTH_SHORT).show();
+          }
         }, error ->
-                Log.d("eTag",error.getMessage())){
+                Log.d("eTag", error.getMessage())) {
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("customerName",customerName);
-                map.put("customerNumber",customerNumber);
-                map.put("batteryBarcode",barcodeValue);
-                map.put("retailerID",String.valueOf(retailerID));
-                map.put("purchaseDate",selectedDate);
-                map.put("ExpireDate",expireDate);
+                HashMap<String, String> map = new HashMap<>();
+                map.put("code", barcodeValue);
+                map.put("id", Paper.book().read(KEYS.ID));
                 return map;
             }
         };

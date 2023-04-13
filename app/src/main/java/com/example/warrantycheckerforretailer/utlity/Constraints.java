@@ -9,9 +9,9 @@ public class Constraints {
     public static final String PROFILE=BASE_URL+API.PROFILE;
     public static final String BATTERY_INFO=BASE_URL+API.GET_BATTERY;
     public static final String BATTERY_SELL=BASE_URL+API.SELL;
+    public static final String SELL_BATTERY=BASE_URL+API.SELL_BATTERY;
+    public static final String CHECK_BATTERY=BASE_URL+API.CHECK_BATTERY;
 
-    public static final String Url_login="http://192.168.31.131/WarrantyChecker/v1/retailerlogin.php";
-    public static final String add_customer="http://192.168.31.131/WarrantyChecker/v1/addCustomer.php";
     public static final String get_Customer_List ="http://192.168.31.131/WarrantyChecker/v1/getCustomerList.php";
 
 }

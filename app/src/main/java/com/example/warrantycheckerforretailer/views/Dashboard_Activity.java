@@ -57,9 +57,7 @@ public class Dashboard_Activity extends AppCompatActivity {
             startActivity(new Intent(Dashboard_Activity.this, ProfileActivity.class));
         });
 
-        binding.dashboardCustomerBilling.setOnClickListener(v -> {
-            startActivity(new Intent(Dashboard_Activity.this, SellBatteryActivity.class));
-        });
+
         binding.dashboardCustomerList.setOnClickListener(v -> {
             startActivity(new Intent(Dashboard_Activity.this, CustomerListActivity.class));
         });
@@ -67,6 +65,11 @@ public class Dashboard_Activity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        getStock();
+        super.onResume();
+    }
 
     private void getStock() {
 
@@ -122,6 +125,13 @@ public class Dashboard_Activity extends AppCompatActivity {
 
                         }
                         int stock=i-x;
+                        binding.dashboardCustomerBilling.setOnClickListener(v -> {
+                            if (stock==0){
+                                Toast.makeText(Dashboard_Activity.this, "Battery Stock out !", Toast.LENGTH_SHORT).show();
+                            }else{
+                                startActivity(new Intent(Dashboard_Activity.this, SellBatteryActivity.class));
+                            }
+                        });
                         binding.stock.setText(stock+" stock");
                         binding.dashboardSell.setText(x+" sell");
 
