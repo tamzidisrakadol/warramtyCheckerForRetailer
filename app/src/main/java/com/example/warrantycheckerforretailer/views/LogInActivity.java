@@ -3,6 +3,7 @@ package com.example.warrantycheckerforretailer.views;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.warrantycheckerforretailer.databinding.ActivityLoginBinding;
 import com.example.warrantycheckerforretailer.repository.SharedPrefManager;
 import com.example.warrantycheckerforretailer.utlity.Constraints;
+import com.example.warrantycheckerforretailer.utlity.KEYS;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,8 +28,11 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.paperdb.Paper;
+
 public class LogInActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -37,20 +42,25 @@ public class LogInActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Paper.init(getApplicationContext());
+        checkLogin();
         getSupportActionBar().hide();
-
-        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-            finish();
-            Intent intent = new Intent(this, Dashboard_Activity.class);
-            startActivity(intent);
-            return;
-        }
+        progressDialog=new ProgressDialog(LogInActivity.this);
+        progressDialog.setTitle("Lading...");
+        progressDialog.setCancelable(false);
 
         binding.loginBtn.setOnClickListener(v -> {
             if (isDataValid()) {
                 login();
             }
         });
+    }
+
+    private void checkLogin() {
+        if (Paper.book().read(KEYS.ID)!=null){
+            startActivity(new Intent(getApplicationContext(),Dashboard_Activity.class));
+            finishAffinity();
+        }
     }
 
 
@@ -69,37 +79,33 @@ public class LogInActivity extends AppCompatActivity {
 
     //login to Dashboard
     private void login() {
+        progressDialog.show();
         String companyName = binding.loginCompanyNameET.getText().toString().trim();
         String retailerName = binding.retailerNameEt.getText().toString().trim();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.Url_login, response -> {
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                if (!jsonObject.getBoolean("error")) {
-                    SharedPrefManager.getInstance(getApplicationContext())
-                            .userLogin(jsonObject.getInt("id")
-                                    , jsonObject.getString("companyName")
-                                    , jsonObject.getString("salesMan")
-                                    , jsonObject.getString("panNumber"));
-                    Toast.makeText(LogInActivity.this, "User login Successful", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LogInActivity.this, Dashboard_Activity.class));
-                    finish();
-                } else {
-                    Toast.makeText(LogInActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                }
-            } catch (JSONException e) {
-                Log.i("exception", e.toString());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.LOGIN, response -> {
+
+            progressDialog.dismiss();
+            if (!response.toString().equals("user not found")){
+                Toast.makeText(this, "Login Successfully !", Toast.LENGTH_SHORT).show();
+                Paper.book().write(KEYS.ID,response);
+                startActivity(new Intent(getApplicationContext(),Dashboard_Activity.class));
+                finishAffinity();
+
+            }else{
+                Toast.makeText(this, ""+response, Toast.LENGTH_SHORT).show();
             }
+
         }, error -> {
             Log.d("ETag", "error" + error.toString());
-            Toast.makeText(LogInActivity.this, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, ""+error, Toast.LENGTH_SHORT).show();
         }) {
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<>();
-                map.put("companyName", companyName);
-                map.put("salesMan", retailerName);
+                map.put("username", companyName);
+                map.put("password", retailerName);
                 return map;
             }
         };

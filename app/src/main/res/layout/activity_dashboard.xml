@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -27,31 +28,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
+                android:id="@+id/stock"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:fontFamily="@font/alike"
                 android:gravity="center"
-                android:text="Total Battery \n Sold"
+                android:text="100 stock"
                 android:textColor="#878383"
                 android:textSize="@dimen/_18sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/dashboardTotalBatteryTV"
-                android:layout_width="wrap_content"
+                android:id="@+id/dashboardSell"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
-                android:fontFamily="@font/fontstyle"
-                android:text="15pcs"
+                android:text="100 sell"
                 android:textColor="#878383"
                 android:textSize="@dimen/_18sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
 
@@ -145,7 +145,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
-                android:fontFamily="@font/alike"
                 android:text="Show Customer List"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_17sdp"
@@ -229,7 +228,6 @@
         android:layout_marginTop="28dp"
         android:text="Welcome,"
         android:textColor="@color/white"
-        android:fontFamily="@font/alike"
         android:textSize="@dimen/_25sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -242,7 +240,6 @@
         android:layout_marginTop="16dp"
         android:text="Retailer name"
         android:maxLines="1"
-        android:fontFamily="@font/alike"
         android:textColor="@color/white"
         android:textSize="@dimen/_25sdp"
         app:layout_constraintStart_toStartOf="parent"
