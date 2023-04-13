@@ -40,7 +40,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="100 stock"
+                android:text="0 stock"
                 android:textColor="#878383"
                 android:textSize="@dimen/_18sdp"
                 app:layout_constraintStart_toStartOf="parent"

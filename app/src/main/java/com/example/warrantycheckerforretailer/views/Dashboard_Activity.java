@@ -19,7 +19,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.warrantycheckerforretailer.databinding.ActivityDashboardBinding;
 import com.example.warrantycheckerforretailer.models.CustomerModel;
-import com.example.warrantycheckerforretailer.repository.SharedPrefManager;
 import com.example.warrantycheckerforretailer.utlity.Constraints;
 import com.example.warrantycheckerforretailer.utlity.KEYS;
 
@@ -38,16 +37,21 @@ public class Dashboard_Activity extends AppCompatActivity {
     ActivityDashboardBinding binding;
     String TAG = "MyTag";
     List<CustomerModel> list = new ArrayList<>();
-    int i, x;
+    String name;
+    int i,x;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Paper.init(getApplicationContext());
         getSupportActionBar().hide();
-        getCustomerList();
+        name=getIntent().getStringExtra("name");
+        binding.dashboardRetailerNameTv.setText(name);
         getStock();
+        //getSell();
+       // Toast.makeText(this, ""+Paper.book().read(KEYS.ID), Toast.LENGTH_SHORT).show();
 
         binding.dashboardRetailerProfile.setOnClickListener(v -> {
             startActivity(new Intent(Dashboard_Activity.this, ProfileActivity.class));
@@ -63,27 +67,27 @@ public class Dashboard_Activity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        getCustomerList();
-        super.onResume();
-    }
 
     private void getStock() {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constraints.BATTERY_INFO, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.BATTERY_INFO, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for (i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+               if (!response.equals("0")){
+                   try {
+                       JSONArray jsonArray = new JSONArray(response);
+                       for ( i = 0; i < jsonArray.length(); i++) {
+                           JSONObject jsonObject = jsonArray.getJSONObject(i);
+                           Log.d(TAG, "onResponse: "+jsonObject.getString("id"));
 
-                    }
-                    loadSell();
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                       }
+                       getSell(i);
+                   } catch (JSONException e) {
+                       throw new RuntimeException(e);
+                   }
+               }else{
+                   getSell(0);
+               }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -105,22 +109,27 @@ public class Dashboard_Activity extends AppCompatActivity {
 
     }
 
-    private void loadSell() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constraints.BATTERY_SELL, new Response.Listener<String>() {
+    private void getSell(int i) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.BATTERY_SELL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for (x = 0; x < jsonArray.length(); x++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(x);
+                if (!response.equals("0")){
+                    try {
+                        JSONArray jsonArray = new JSONArray(response);
+                        for (x = 0; x < jsonArray.length(); x++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(x);
+                            Log.d(TAG, "onResponse: "+jsonObject.getString("id"));
 
+                        }
+                        int stock=i-x;
+                        binding.stock.setText(stock+" stock");
+                        binding.dashboardSell.setText(x+" sell");
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
                     }
-                    int stock = i - x;
-
-                    binding.stock.setText(stock + " stock");
-                    binding.dashboardSell.setText(x + " sell");
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                }else{
+                    binding.dashboardSell.setText("0 sell");
                 }
             }
         }, new Response.ErrorListener() {
@@ -142,30 +151,5 @@ public class Dashboard_Activity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void getCustomerList() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.PROFILE, response -> {
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                String name = jsonObject.getString("Companyname");
-                binding.dashboardRetailerNameTv.setText(name);
 
-            } catch (JSONException e) {
-                Log.d("errorTag", e.getMessage());
-            }
-
-        }, error -> {
-            Log.d("tag", error.getMessage());
-            Toast.makeText(this, "" + error.toString(), Toast.LENGTH_SHORT).show();
-        }) {
-            @Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> map = new HashMap<>();
-                map.put("id", Paper.book().read(KEYS.ID));
-                return map;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
 }

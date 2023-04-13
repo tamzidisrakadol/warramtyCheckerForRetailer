@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -58,9 +59,38 @@ public class LogInActivity extends AppCompatActivity {
 
     private void checkLogin() {
         if (Paper.book().read(KEYS.ID)!=null){
-            startActivity(new Intent(getApplicationContext(),Dashboard_Activity.class));
-            finishAffinity();
-        }
+            binding.view.setVisibility(View.INVISIBLE);
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.PROFILE, response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        String name = jsonObject.getString("Companyname");
+                        startActivity(new Intent(getApplicationContext(),Dashboard_Activity.class)
+                                .putExtra("name",name)
+                        );
+                        finishAffinity();
+
+                    } catch (JSONException e) {
+                        Log.d("errorTag", e.getMessage());
+                    }
+
+                }, error -> {
+                    Log.d("tag", error.getMessage());
+                    Toast.makeText(this, "" + error.toString(), Toast.LENGTH_SHORT).show();
+                }) {
+                    @Nullable
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("id", Paper.book().read(KEYS.ID));
+                        return map;
+                    }
+                };
+                RequestQueue requestQueue = Volley.newRequestQueue(this);
+                requestQueue.add(stringRequest);
+            }
+
+
+
     }
 
 
