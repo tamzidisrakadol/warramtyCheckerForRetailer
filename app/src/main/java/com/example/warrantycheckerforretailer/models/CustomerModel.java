@@ -1,36 +1,22 @@
 package com.example.warrantycheckerforretailer.models;
 
 public class CustomerModel {
-    int cID;
-    String customerName,batteryBarcode,sellingDate,expireDate;
-    Long customerNumber;
+    int id;
+    String batteryBarcode,sellingDate,expireDate;
 
-    public CustomerModel(int cID, String customerName, String batteryBarcode, String sellingDate, String expireDate, Long customerNumber) {
-        this.cID = cID;
-        this.customerName = customerName;
+    public CustomerModel(int id, String batteryBarcode, String sellingDate, String expireDate) {
+        this.id = id;
         this.batteryBarcode = batteryBarcode;
         this.sellingDate = sellingDate;
         this.expireDate = expireDate;
-        this.customerNumber = customerNumber;
     }
 
-    public CustomerModel() {
+    public int getId() {
+        return id;
     }
 
-    public int getcID() {
-        return cID;
-    }
-
-    public void setcID(int cID) {
-        this.cID = cID;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getBatteryBarcode() {
@@ -55,13 +41,5 @@ public class CustomerModel {
 
     public void setExpireDate(String expireDate) {
         this.expireDate = expireDate;
-    }
-
-    public Long getCustomerNumber() {
-        return customerNumber;
-    }
-
-    public void setCustomerNumber(Long customerNumber) {
-        this.customerNumber = customerNumber;
     }
 }

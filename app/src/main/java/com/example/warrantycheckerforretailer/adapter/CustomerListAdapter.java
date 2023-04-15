@@ -35,7 +35,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         CustomerModel customerModel = customerModelList.get(position);
         Date currentDate = Calendar.getInstance().getTime();
         String expireDate = customerModel.getExpireDate();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String formatCurrentDate = sdf.format(currentDate);
 
         try {
@@ -55,8 +55,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         }
 
 
-        holder.customerListItemBinding.listCustomerName.setText(customerModel.getCustomerName());
-        holder.customerListItemBinding.listCustomerNumber.setText(customerModel.getCustomerNumber().toString());
+
         holder.customerListItemBinding.listCustomerBatteryBarcode.setText(customerModel.getBatteryBarcode());
         holder.customerListItemBinding.listCustomerSellingDate.setText(customerModel.getSellingDate());
     }

@@ -53,7 +53,6 @@
                 android:id="@+id/sellBatteryBtn"
                 android:layout_width="@dimen/_180sdp"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_marginStart="91dp"
                 android:layout_marginTop="20dp"
                 android:text="Sell battery"
                 android:textSize="@dimen/_15sdp"

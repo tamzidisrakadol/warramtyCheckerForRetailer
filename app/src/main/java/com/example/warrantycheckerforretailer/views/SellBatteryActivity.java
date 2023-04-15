@@ -45,18 +45,13 @@ public class SellBatteryActivity extends AppCompatActivity {
                 Toast.makeText(this, "Please scan battery", Toast.LENGTH_SHORT).show();
                return;
            }
-
             register();
-
-
         });
-
         binding.scanBtn.setOnClickListener(v -> {
             scanBarcode();
         });
 
     }
-
     private void checkBattery() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.CHECK_BATTERY, response -> {
             if (response.equals("found")){
@@ -108,7 +103,7 @@ public class SellBatteryActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.SELL_BATTERY, response -> {
           if (response.equals("success")){
               Toast.makeText(this, "Successfully added !", Toast.LENGTH_SHORT).show();
-              finish();
+              onBackPressed();
           }else{
               Toast.makeText(this, ""+response, Toast.LENGTH_SHORT).show();
           }

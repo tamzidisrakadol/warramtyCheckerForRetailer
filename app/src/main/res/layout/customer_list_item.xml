@@ -27,82 +27,35 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/listuser"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/listCustomerName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="16dp"
-                android:text="CustomerName"
-                android:fontFamily="@font/alike"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp"
-                app:layout_constraintStart_toEndOf="@+id/imageView9"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:src="@drawable/listsmartphone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView9" />
-
-            <TextView
-                android:id="@+id/listCustomerNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:fontFamily="@font/alike"
-                android:text="+88019565821041"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp"
-                app:layout_constraintStart_toEndOf="@+id/imageView10"
-                app:layout_constraintTop_toBottomOf="@+id/listCustomerName" />
-
-            <ImageView
                 android:id="@+id/imageView16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:src="@drawable/listbarcodescanner"
+                android:src="@drawable/baseline_qr_code_24"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView10" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/listCustomerBatteryBarcode"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_150sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:fontFamily="@font/alike"
-                android:textStyle="bold"
-                android:text="HDIEN4282SASD882"
                 android:maxLines="1"
+                android:text="HDIEN4282SASD882"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView16"
                 app:layout_constraintStart_toEndOf="@+id/imageView16"
-                app:layout_constraintTop_toBottomOf="@+id/listCustomerNumber" />
+                app:layout_constraintTop_toTopOf="@+id/imageView16" />
 
 
             <TextView
                 android:id="@+id/listCustomerSellingDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginEnd="16dp"
                 android:text="22-03-23"
                 android:textColor="#E80909"
@@ -116,7 +69,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
-                android:fontFamily="@font/alike"
                 android:text="29 days left"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sdp"

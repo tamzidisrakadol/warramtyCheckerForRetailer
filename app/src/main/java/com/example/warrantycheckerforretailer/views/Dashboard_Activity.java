@@ -53,9 +53,7 @@ public class Dashboard_Activity extends AppCompatActivity {
         //getSell();
        // Toast.makeText(this, ""+Paper.book().read(KEYS.ID), Toast.LENGTH_SHORT).show();
 
-        binding.dashboardRetailerProfile.setOnClickListener(v -> {
-            startActivity(new Intent(Dashboard_Activity.this, ProfileActivity.class));
-        });
+
 
 
         binding.dashboardCustomerList.setOnClickListener(v -> {
