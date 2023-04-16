@@ -12,6 +12,6 @@ public class Constraints {
     public static final String SELL_BATTERY=BASE_URL+API.SELL_BATTERY;
     public static final String CHECK_BATTERY=BASE_URL+API.CHECK_BATTERY;
 
-    public static final String get_Customer_List ="http://192.168.31.131/WarrantyChecker/v1/getCustomerList.php";
+
 
 }

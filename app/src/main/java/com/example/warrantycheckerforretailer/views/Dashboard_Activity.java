@@ -38,7 +38,8 @@ public class Dashboard_Activity extends AppCompatActivity {
     String TAG = "MyTag";
     List<CustomerModel> list = new ArrayList<>();
     String name;
-    int i,x;
+    int i, x;
+    int stock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +48,11 @@ public class Dashboard_Activity extends AppCompatActivity {
         setContentView(binding.getRoot());
         Paper.init(getApplicationContext());
         getSupportActionBar().hide();
-        name=getIntent().getStringExtra("name");
+        name = getIntent().getStringExtra("name");
         binding.dashboardRetailerNameTv.setText(name);
         getStock();
         //getSell();
-       // Toast.makeText(this, ""+Paper.book().read(KEYS.ID), Toast.LENGTH_SHORT).show();
-
-
+        // Toast.makeText(this, ""+Paper.book().read(KEYS.ID), Toast.LENGTH_SHORT).show();
 
 
         binding.dashboardCustomerList.setOnClickListener(v -> {
@@ -74,21 +73,20 @@ public class Dashboard_Activity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.BATTERY_INFO, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-               if (!response.equals("0")){
-                   try {
-                       JSONArray jsonArray = new JSONArray(response);
-                       for ( i = 0; i < jsonArray.length(); i++) {
-                           JSONObject jsonObject = jsonArray.getJSONObject(i);
-                           Log.d(TAG, "onResponse: "+jsonObject.getString("id"));
-
-                       }
-                       getSell(i);
-                   } catch (JSONException e) {
-                       throw new RuntimeException(e);
-                   }
-               }else{
-                   getSell(0);
-               }
+                if (!response.equals("0")) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(response);
+                        for (i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            Log.d(TAG, "onResponse: " + jsonObject.getString("id"));
+                        }
+                        getSell(i);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    getSell(0);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -114,30 +112,38 @@ public class Dashboard_Activity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.BATTERY_SELL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (!response.equals("0")){
+                if (!response.equals("0")) {
                     try {
                         JSONArray jsonArray = new JSONArray(response);
                         for (x = 0; x < jsonArray.length(); x++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(x);
-                            Log.d(TAG, "onResponse: "+jsonObject.getString("id"));
+                            Log.d(TAG, "onResponse: " + jsonObject.getString("id"));
 
                         }
-                        int stock=i-x;
+                        stock = i - x;
                         binding.dashboardCustomerBilling.setOnClickListener(v -> {
-                            if (stock==0){
+                            if (stock == 0) {
                                 Toast.makeText(Dashboard_Activity.this, "Battery Stock out !", Toast.LENGTH_SHORT).show();
-                            }else{
+                            } else {
                                 startActivity(new Intent(Dashboard_Activity.this, SellBatteryActivity.class));
                             }
                         });
-                        binding.stock.setText(stock+" stock");
-                        binding.dashboardSell.setText(x+" sell");
+                        binding.stock.setText(stock + " stock");
+                        binding.dashboardSell.setText(x + " sell");
 
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
-                }else{
+                } else {
+                    binding.stock.setText(i + " stock");
                     binding.dashboardSell.setText("0 sell");
+                    binding.dashboardCustomerBilling.setOnClickListener(v -> {
+                        if (i == 0) {
+                            Toast.makeText(Dashboard_Activity.this, "Battery Stock out !", Toast.LENGTH_SHORT).show();
+                        } else {
+                            startActivity(new Intent(Dashboard_Activity.this, SellBatteryActivity.class));
+                        }
+                    });
                 }
             }
         }, new Response.ErrorListener() {
