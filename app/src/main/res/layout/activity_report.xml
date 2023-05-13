@@ -95,6 +95,19 @@
                 />
 
 
+            <Button
+                android:layout_gravity="center"
+                android:id="@+id/history"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/btn_shape"
+                android:fontFamily="@font/fontstyle"
+                android:text="history"
+                android:layout_marginBottom="10dp"
+                />
+
+
         </LinearLayout>
 
 

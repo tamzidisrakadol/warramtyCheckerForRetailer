@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
@@ -46,6 +47,9 @@ public class ReportActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Report Battery");
         binding.scanBtn.setOnClickListener(v -> {
             scanBarcode();
+        });
+        binding.history.setOnClickListener(v->{
+            startActivity(new Intent(getApplicationContext(),ReportListActivity.class));
         });
         binding.submitBtn.setOnClickListener(v -> {
             String msg = binding.reportET.getText().toString();
