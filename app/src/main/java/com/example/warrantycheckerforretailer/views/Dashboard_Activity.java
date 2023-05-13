@@ -2,8 +2,10 @@ package com.example.warrantycheckerforretailer.views;
 
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,14 +53,33 @@ public class Dashboard_Activity extends AppCompatActivity {
         name = getIntent().getStringExtra("name");
         binding.dashboardRetailerNameTv.setText(name);
         getStock();
-        //getSell();
-        // Toast.makeText(this, ""+Paper.book().read(KEYS.ID), Toast.LENGTH_SHORT).show();
-
-
         binding.dashboardCustomerList.setOnClickListener(v -> {
             startActivity(new Intent(Dashboard_Activity.this, CustomerListActivity.class));
         });
-
+        binding.report.setOnClickListener(v->{
+            startActivity(new Intent(getApplicationContext(),ReportActivity.class));
+        });
+        binding.logout.setOnClickListener(v->{
+            AlertDialog.Builder builder=new AlertDialog.Builder(Dashboard_Activity.this);
+            builder.setTitle("Alert !");
+            builder.setMessage("Do you want to logout ?");
+            builder.setCancelable(true);
+            builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Paper.book().delete(KEYS.ID);
+                    startActivity(new Intent(getApplicationContext(),LogInActivity.class));
+                    finishAffinity();
+                }
+            }).setPositiveButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            AlertDialog alertDialog=builder.create();
+            alertDialog.show();
+        });
 
     }
 
@@ -67,9 +88,7 @@ public class Dashboard_Activity extends AppCompatActivity {
         getStock();
         super.onResume();
     }
-
     private void getStock() {
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.BATTERY_INFO, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -109,6 +128,7 @@ public class Dashboard_Activity extends AppCompatActivity {
     }
 
     private void getSell(int i) {
+        Log.d(TAG, "getSell: "+i);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.BATTERY_SELL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -121,15 +141,24 @@ public class Dashboard_Activity extends AppCompatActivity {
 
                         }
                         stock = i - x;
+                        if (i==0){
+                            binding.stock.setText("0 stock");
+                            binding.dashboardSell.setText(x + " sell");
+                        }else{
+                            binding.stock.setText(stock + " stock");
+                            binding.dashboardSell.setText(x + " sell");
+                        }
+
+
                         binding.dashboardCustomerBilling.setOnClickListener(v -> {
                             if (stock == 0) {
+
                                 Toast.makeText(Dashboard_Activity.this, "Battery Stock out !", Toast.LENGTH_SHORT).show();
                             } else {
                                 startActivity(new Intent(Dashboard_Activity.this, SellBatteryActivity.class));
                             }
                         });
-                        binding.stock.setText(stock + " stock");
-                        binding.dashboardSell.setText(x + " sell");
+
 
                     } catch (JSONException e) {
                         throw new RuntimeException(e);

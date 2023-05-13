@@ -22,7 +22,6 @@ import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import io.paperdb.Paper;
 
@@ -30,7 +29,6 @@ public class SellBatteryActivity extends AppCompatActivity {
     ActivitySellBatteryBinding binding;
     private Boolean isDateSelected = false;
     private Boolean isBarcodeScanned = false;
-    private String selectedDate, expireDate;
     private String barcodeValue;
 
     @Override
@@ -41,11 +39,26 @@ public class SellBatteryActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Sell Battery");
         Paper.init(getApplicationContext());
         binding.sellBatteryBtn.setOnClickListener(v -> {
+            String name,mail,phone,address;
+            name=binding.customerNameET.getText().toString();
+            mail=binding.customerMailET.getText().toString();
+            phone=binding.customerPhoneET.getText().toString();
+            address=binding.customerAddressET.getText().toString();
+
             if (barcodeValue==null){
                 Toast.makeText(this, "Please scan battery", Toast.LENGTH_SHORT).show();
                return;
-           }
-            register();
+           }if (name.isEmpty()){
+                Toast.makeText(this, "Enter Name !", Toast.LENGTH_SHORT).show();
+                return;
+            }if (phone.isEmpty()){
+                Toast.makeText(this, "Enter Phone !", Toast.LENGTH_SHORT).show();
+                return;
+            }if (address.isEmpty()){
+                Toast.makeText(this, "Enter Address !", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            register(name,mail,phone,address);
         });
         binding.scanBtn.setOnClickListener(v -> {
             scanBarcode();
@@ -74,9 +87,6 @@ public class SellBatteryActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void batteryExpireDate(int year, int month, int dayOfMonth) {
-        expireDate = String.valueOf(year + "-" + (month + 3) + "-" + dayOfMonth);
-    }
 
     //scan barcode of battery
     private void scanBarcode() {
@@ -98,7 +108,7 @@ public class SellBatteryActivity extends AppCompatActivity {
     });
 
 
-    private void register() {
+    private void register(String name, String mail, String phone, String address) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.SELL_BATTERY, response -> {
           if (response.equals("success")){
@@ -106,6 +116,7 @@ public class SellBatteryActivity extends AppCompatActivity {
               onBackPressed();
           }else{
               Toast.makeText(this, ""+response, Toast.LENGTH_SHORT).show();
+              onBackPressed();
           }
         }, error ->
                 Log.d("eTag", error.getMessage())) {
@@ -114,6 +125,10 @@ public class SellBatteryActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<>();
                 map.put("code", barcodeValue);
+                map.put("name", name);
+                map.put("mail", mail);
+                map.put("phone", phone);
+                map.put("address", address);
                 map.put("id", Paper.book().read(KEYS.ID));
                 return map;
             }
