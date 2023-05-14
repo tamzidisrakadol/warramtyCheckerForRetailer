@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/codeTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="code"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_margin="10dp"
+            />
+        <TextView
+            android:id="@+id/scanDateTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="14/05/2023"
+            android:textSize="18sp"
+            android:layout_margin="10dp"
+            />
+        <TextView
+            android:id="@+id/endDateTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="14/06/2023"
+            android:textSize="18sp"
+            android:layout_margin="10dp"
+            />
+        <TextView
+            android:id="@+id/dayleftTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="10 day left"
+            android:gravity="end"
+            android:textSize="18sp"
+            android:layout_margin="10dp"
+            />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
