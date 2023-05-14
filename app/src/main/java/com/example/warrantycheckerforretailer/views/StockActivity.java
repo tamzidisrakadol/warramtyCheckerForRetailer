@@ -1,11 +1,13 @@
 package com.example.warrantycheckerforretailer.views;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,6 +18,7 @@ import com.example.warrantycheckerforretailer.R;
 import com.example.warrantycheckerforretailer.adapter.ReportAdapter;
 import com.example.warrantycheckerforretailer.databinding.ActivityStockBinding;
 import com.example.warrantycheckerforretailer.models.ReportModle;
+import com.example.warrantycheckerforretailer.models.StockModel;
 import com.example.warrantycheckerforretailer.utlity.Constraints;
 import com.example.warrantycheckerforretailer.utlity.KEYS;
 
@@ -24,14 +27,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.paperdb.Paper;
 
 public class StockActivity extends AppCompatActivity {
 
     ActivityStockBinding binding;
-    ArrayList<ReportModle> reportModleArrayList = new ArrayList<>();
     ReportAdapter reportAdapter;
+    ArrayList<StockModel> stockModel=new ArrayList<>();
+    ArrayList<StockModel> sellModel=new ArrayList<>();
+    ArrayList<StockModel> mainProduct=new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,35 +49,42 @@ public class StockActivity extends AppCompatActivity {
         binding.stockRecyclerview.setHasFixedSize(true);
         binding.stockRecyclerview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         getData();
+        getSell();
+        loadRecycler();
     }
-    private void getData() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constraints.GET_MSG, new Response.Listener<String>() {
+
+    private void loadRecycler() {
+        for (int i=0; i<stockModel.size();i++){
+            if (sellModel.get(i).getBatterycode().equals(stockModel.get(i).getBatterycode())){
+                mainProduct.add(stockModel.get(i));
+            }
+
+        }
+    }
+
+    private void getSell() {
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, Constraints.SELL_BATTERY, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (!response.equals("0")){
                     try {
-                        JSONArray jsonArray = new JSONArray(response);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            int id = jsonObject.getInt("id");
-                            String vendorID = jsonObject.getString("vendorid");
-                            String code = jsonObject.getString("batterycode");
-                            String date = jsonObject.getString("date");
-                            String report = jsonObject.getString("smg");
-                            String status = jsonObject.getString("status");
-                           if (Paper.book().read(KEYS.ID).equals(vendorID)){
-                               reportModleArrayList.add(new ReportModle(id, vendorID, code, date, report,status));
-                           }
+                        JSONArray jsonArray=new JSONArray(response);
+
+                        for (int i =0;i<jsonArray.length();i++){
+                            JSONObject jsonObject=jsonArray.getJSONObject(i);
+                            int id=jsonObject.getInt("id");
+                            String vendorid=jsonObject.getString("vendorid");
+                            String batterycode=jsonObject.getString("batterycode");
+                            String scandate=jsonObject.getString("scandate");
+                            String enddate=jsonObject.getString("enddate");
+                            sellModel.add(new StockModel(id,vendorid,batterycode,scandate,enddate));
+
                         }
-                        reportAdapter = new ReportAdapter(getApplicationContext(), reportModleArrayList);
-                        binding.stockRecyclerview.setAdapter(reportAdapter);
-                        binding.stockRecyclerview.scrollToPosition(reportModleArrayList.size() - 1);
-                        reportAdapter.notifyDataSetChanged();
+
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
-                }else{
-                    Toast.makeText(StockActivity.this, "Empty List !", Toast.LENGTH_SHORT).show();
+
                 }
             }
         }, new Response.ErrorListener() {
@@ -77,7 +92,58 @@ public class StockActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
             }
-        });
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> hashMap=new HashMap<>();
+                hashMap.put("id",Paper.book().read(KEYS.ID));
+                return hashMap;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void getData() {
+      StringRequest stringRequest=new StringRequest(Request.Method.POST, Constraints.BATTERY_INFO, new Response.Listener<String>() {
+          @Override
+          public void onResponse(String response) {
+              if (!response.equals("0")){
+                  try {
+                      JSONArray jsonArray=new JSONArray(response);
+
+                      for (int i =0;i<jsonArray.length();i++){
+                          JSONObject jsonObject=jsonArray.getJSONObject(i);
+                          int id=jsonObject.getInt("id");
+                          String vendorid=jsonObject.getString("vendorid");
+                          String batterycode=jsonObject.getString("batterycode");
+                          String scandate=jsonObject.getString("scandate");
+                          String enddate=jsonObject.getString("enddate");
+                          stockModel.add(new StockModel(id,vendorid,batterycode,scandate,enddate));
+
+                      }
+
+                  } catch (JSONException e) {
+                      throw new RuntimeException(e);
+                  }
+
+              }
+          }
+      }, new Response.ErrorListener() {
+          @Override
+          public void onErrorResponse(VolleyError error) {
+
+          }
+      }){
+          @Nullable
+          @Override
+          protected Map<String, String> getParams() throws AuthFailureError {
+              HashMap<String,String> hashMap=new HashMap<>();
+              hashMap.put("id",Paper.book().read(KEYS.ID));
+              return hashMap;
+          }
+      };
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
 
