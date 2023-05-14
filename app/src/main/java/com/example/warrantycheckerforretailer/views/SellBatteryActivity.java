@@ -27,8 +27,9 @@ import io.paperdb.Paper;
 
 public class SellBatteryActivity extends AppCompatActivity {
     ActivitySellBatteryBinding binding;
-    private Boolean isDateSelected = false;
-    private Boolean isBarcodeScanned = false;
+//    private Boolean isDateSelected = false;
+//    private Boolean isBarcodeScanned = false;
+    private Boolean isBatteryValid = false;
     private String barcodeValue;
 
     @Override
@@ -37,17 +38,22 @@ public class SellBatteryActivity extends AppCompatActivity {
         binding = ActivitySellBatteryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportActionBar().setTitle("Sell Battery");
+
         Paper.init(getApplicationContext());
+
         binding.sellBatteryBtn.setOnClickListener(v -> {
+
             String name,mail,phone,address;
             name=binding.customerNameET.getText().toString();
             mail=binding.customerMailET.getText().toString();
             phone=binding.customerPhoneET.getText().toString();
             address=binding.customerAddressET.getText().toString();
+            barcodeValue = binding.barcodeTV.getText().toString();
+            checkBattery(barcodeValue);
 
-            if (barcodeValue==null){
+            if (barcodeValue.isEmpty()){
                 Toast.makeText(this, "Please scan battery", Toast.LENGTH_SHORT).show();
-               return;
+                return;
            }if (name.isEmpty()){
                 Toast.makeText(this, "Enter Name !", Toast.LENGTH_SHORT).show();
                 return;
@@ -57,18 +63,25 @@ public class SellBatteryActivity extends AppCompatActivity {
             }if (address.isEmpty()){
                 Toast.makeText(this, "Enter Address !", Toast.LENGTH_SHORT).show();
                 return;
+            }if (!isBatteryValid){
+                return;
             }
-            register(name,mail,phone,address);
+            register(name,mail,phone,address,barcodeValue);
+            Log.d("error","value :"+barcodeValue);
         });
+
         binding.scanBtn.setOnClickListener(v -> {
             scanBarcode();
         });
 
     }
-    private void checkBattery() {
+    private void checkBattery(String code) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.CHECK_BATTERY, response -> {
             if (response.equals("found")){
-            }else{
+                Toast.makeText(this, "checked", Toast.LENGTH_SHORT).show();
+                isBatteryValid = true;
+            }
+            else{
                 binding.sellBatteryBtn.setEnabled(false);
                 Toast.makeText(this, "Pleas scan valid battery", Toast.LENGTH_SHORT).show();
             }
@@ -78,7 +91,7 @@ public class SellBatteryActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<>();
-                map.put("code", barcodeValue);
+                map.put("code", code);
                 map.put("id", Paper.book().read(KEYS.ID));
                 return map;
             }
@@ -102,13 +115,12 @@ public class SellBatteryActivity extends AppCompatActivity {
         if (result.getContents() != null) {
             binding.barcodeTV.setText(result.getContents());
             barcodeValue = result.getContents();
-            checkBattery();
-            isBarcodeScanned = true;
+            checkBattery(barcodeValue);
         }
     });
 
 
-    private void register(String name, String mail, String phone, String address) {
+    private void register(String name, String mail, String phone, String address,String code) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.SELL_BATTERY, response -> {
           if (response.equals("success")){
@@ -124,7 +136,7 @@ public class SellBatteryActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<>();
-                map.put("code", barcodeValue);
+                map.put("code", code);
                 map.put("name", name);
                 map.put("mail", mail);
                 map.put("phone", phone);

@@ -25,27 +25,33 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-              <LinearLayout
+              <androidx.constraintlayout.widget.ConstraintLayout
                   android:layout_margin="10dp"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   >
+
                   <ImageView
                       android:id="@+id/scanBtn"
                       android:layout_width="50dp"
                       android:layout_height="50dp"
-                      android:src="@drawable/scan"/>
-                  <TextView
+                      android:src="@drawable/scan"
+                      app:layout_constraintStart_toStartOf="parent"
+                      app:layout_constraintTop_toTopOf="parent" />
+
+                  <EditText
                       android:id="@+id/barcodeTV"
-                      android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      android:text="scann text"
-                      android:gravity="center"
-                      android:layout_gravity="center"
-                      android:textSize="20sp"/>
+                      android:layout_width="@dimen/_180sdp"
+                      android:layout_height="@dimen/_35sdp"
+                      android:hint="@string/barcode"
+                      android:inputType="text"
+                      android:background="@drawable/tv_bg"
+                      app:layout_constraintEnd_toEndOf="parent"
+                      app:layout_constraintStart_toEndOf="@+id/scanBtn"
+                      app:layout_constraintTop_toTopOf="parent" />
 
 
-              </LinearLayout>
+              </androidx.constraintlayout.widget.ConstraintLayout>
 
               <com.google.android.material.textfield.TextInputLayout
                   android:id="@+id/textInputLayout3"
