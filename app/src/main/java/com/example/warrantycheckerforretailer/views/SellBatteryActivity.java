@@ -50,7 +50,6 @@ public class SellBatteryActivity extends AppCompatActivity {
             address=binding.customerAddressET.getText().toString();
             barcodeValue = binding.barcodeTV.getText().toString();
             checkBattery(barcodeValue);
-
             if (barcodeValue.isEmpty()){
                 Toast.makeText(this, "Please scan battery", Toast.LENGTH_SHORT).show();
                 return;
@@ -64,6 +63,7 @@ public class SellBatteryActivity extends AppCompatActivity {
                 Toast.makeText(this, "Enter Address !", Toast.LENGTH_SHORT).show();
                 return;
             }if (!isBatteryValid){
+                Toast.makeText(this, "Battery Not Found !", Toast.LENGTH_SHORT).show();
                 return;
             }
             register(name,mail,phone,address,barcodeValue);
@@ -78,12 +78,12 @@ public class SellBatteryActivity extends AppCompatActivity {
     private void checkBattery(String code) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.CHECK_BATTERY, response -> {
             if (response.equals("found")){
-                Toast.makeText(this, "checked", Toast.LENGTH_SHORT).show();
                 isBatteryValid = true;
             }
             else{
                 binding.sellBatteryBtn.setEnabled(false);
                 Toast.makeText(this, "Pleas scan valid battery", Toast.LENGTH_SHORT).show();
+                isBatteryValid=false;
             }
         }, error ->
                 Log.d("eTag", error.getMessage())) {
