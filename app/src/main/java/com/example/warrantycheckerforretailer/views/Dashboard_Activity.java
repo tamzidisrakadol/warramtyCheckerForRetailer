@@ -59,8 +59,11 @@ public class Dashboard_Activity extends AppCompatActivity {
         binding.report.setOnClickListener(v->{
             startActivity(new Intent(getApplicationContext(),ReportActivity.class));
         });
-        binding.stock.setOnClickListener(v->{
+        binding.dashboardSell.setOnClickListener(v->{
             startActivity(new Intent(getApplicationContext(),StockActivity.class));
+        });
+        binding.stock.setOnClickListener(v->{
+            startActivity(new Intent(getApplicationContext(),BatteryOnStockActivity.class));
         });
         binding.logout.setOnClickListener(v->{
             AlertDialog.Builder builder=new AlertDialog.Builder(Dashboard_Activity.this);
